@@ -29,13 +29,12 @@ app.get("/entries", async (req,res) => {
     }
 });
 
-// get a purchase entry
-
 
 // update a purchase entry with id, buy_price, coin_name
-app.put("/entries/:id/:buy_price/:coin_name", async(req,res) => {
+app.put("/entries/:id", async(req,res) => {
     try {
-        const data = await dbPool.query("UPDATE currencyEntry SET buy_price=$1, coin_name=$2 WHERE entry_id=$3 RETURNING *", [req.params.buy_price, req.params.coin_name, req.params.id]);
+        let newPrice = req.body.buy_price;
+        const data = await dbPool.query("UPDATE currencyEntry SET buy_price=$1 WHERE entry_id=$2 RETURNING *", [newPrice, req.params.id]);
         res.json(data.rows);
     } catch (err) {
         console.error(err);
@@ -54,5 +53,5 @@ app.delete("/entries/:id", async (req,res) => {
 });
 
 app.listen(5000, () =>{
-    console.log("started on 5000");
+    console.log("Started on 5000");
 });

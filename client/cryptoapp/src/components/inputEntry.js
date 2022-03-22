@@ -1,8 +1,8 @@
 import React, {Fragment, useState} from "react"
 
 const InputEntry = () => {
-    const [buy_price, setCost] = useState(1111);
-    const [coin_name, setcoinName] = useState("Coin Name");
+    const [buy_price, setCost] = useState(0);
+    const [coin_name, setcoinName] = useState("Coin");
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
