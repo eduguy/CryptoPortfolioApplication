@@ -29,6 +29,15 @@ app.get("/entries", async (req,res) => {
     }
 });
 
+app.get("/currencies", async (req,res) => {
+    try {
+        const data = await dbPool.query("SELECT * FROM currencies");
+        res.json(data.rows);
+    } catch (err) {
+        console.error(err);
+    }
+});
+
 
 // update a purchase entry with id, buy_price, coin_name
 app.put("/entries/:id", async(req,res) => {
