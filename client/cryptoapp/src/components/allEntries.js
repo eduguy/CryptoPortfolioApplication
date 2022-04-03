@@ -4,11 +4,15 @@ import EditEntry from "./editEntry";
 const AllEntries = () => {
 
     const [entries, setEntries] = useState([]);
+    const [prices, setPrices] = useState({
+        "Bitcoin": 0,
+        "Ethereum": 0
+    });
     const getEntries = async () => {
         try {
             const response = await fetch("http://localhost:5000/entries");
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setEntries(data);
         }
         catch (err) {
@@ -32,6 +36,22 @@ const AllEntries = () => {
         setEntries(entries.filter(entry => entry.entry_id !== id));
     }
 
+    const getPrices = async(id) => {
+        try {
+            const response = await fetch("http://localhost:5000/prices/");
+
+            let data = await response.json();
+            let k = data.data;
+            const decimalPlaces = 100000;
+            setPrices({
+                "Bitcoin":  Math.round(k[0].quote.USD.price * decimalPlaces) / decimalPlaces,
+                "Ethereum": Math.round(k[1].quote.USD.price * decimalPlaces) / decimalPlaces
+            });
+        } catch (err0) {
+            
+        }
+    }
+    //TODO: add a new column for profits and a button that will do a get request on current prices
     return (
         <Fragment>
             {" "}
@@ -45,6 +65,7 @@ const AllEntries = () => {
                         <th>Buy Price</th>
                         <th>Edit</th>
                         <th>Delete</th>
+                        <th>Current Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +75,9 @@ const AllEntries = () => {
                             <td> {entry.buy_price} </td>
                             <td> <EditEntry entry={entry}/> </td>
                             <td><button onClick={() => remove(entry.entry_id)} className="btn btn-danger"> Delete </button></td>
+                            <td><button onClick={() => getPrices()} className="btn btn-warning">
+                                {prices[entry.coin_name]}
+                            </button></td>
                         </tr>
 
                     ))}
