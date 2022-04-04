@@ -93,6 +93,16 @@ app.get("/history", async (req,res) => {
     }
 });
 
+app.post("/history", async (req,res) => {
+    try {
+        const newData = req.body;
+        const newElem = await dbPool.query("INSERT INTO portfoliohistory(portfolio_value) VALUES($1) RETURNING *", [newData.sum]);
+        res.json(newElem.rows);
+    } catch (err) {
+        console.error(err);
+    }
+});
+
 app.listen(5000, () => {
     console.log("Started on 5000");
 });

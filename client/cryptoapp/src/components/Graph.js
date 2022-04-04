@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react"
 
 import LineChart from './Chart'
-const Graph = () => {
+const Graph = (data) => {
 
     const [chartData, setChartData] = useState({
         labels: [],
@@ -32,7 +32,7 @@ const Graph = () => {
     }
     useEffect(() => {
         getValues();
-    }, []);
+    }, [data]);
     return (
         <LineChart chartData={chartData} />)
 

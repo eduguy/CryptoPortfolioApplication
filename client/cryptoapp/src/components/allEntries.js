@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react"
 import EditEntry from "./editEntry";
+import Graph from './Graph';
 
 const AllEntries = () => {
 
@@ -8,6 +9,7 @@ const AllEntries = () => {
         "Bitcoin": 0,
         "Ethereum": 0
     });
+    const [sumData, setSumData] = useState(0);
     const getEntries = async () => {
         try {
             const response = await fetch("http://localhost:5000/entries");
@@ -20,10 +22,37 @@ const AllEntries = () => {
         }
 
     }
+
+    const updateHistory = async () => {
+        try {
+            let sum = 0;
+            for (let en of entries) {
+                sum += en.buy_price;
+            }
+
+            //TODO: should be based off of buy price, quantity, current prices
+
+            console.log(sum);
+
+            let reqBody = {sum};
+            const response = await fetch("http://localhost:5000/history", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(reqBody)
+            });
+            setSumData(sum);
+        } catch (err) {
+            console.error(err);
+        }
+    }
     useEffect(() => {
         getEntries();
         getPrices();
-    }, []);
+    }, []); 
+
+    useEffect(() => {
+        updateHistory();
+    }, [entries]);
 
     const remove = async (id) => {
         try {
@@ -56,6 +85,7 @@ const AllEntries = () => {
     return (
         <Fragment>
             {" "}
+            <Graph data={sumData}/>
             <h2 className="text-center">
                 Your coins:
             </h2>
