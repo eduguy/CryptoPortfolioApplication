@@ -4,7 +4,7 @@ const InputEntry = () => {
     const [buy_price, setCost] = useState(0);
     const [coin_name, setcoinName] = useState("");
     const [currencies, setCurrencies] = useState([]);
-
+    // TODO: another state for quantity
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
@@ -24,12 +24,10 @@ const InputEntry = () => {
         getCurrencyRows();
     }, []);    
     const getCurrencyRows = async () => {
-            const currencyRows = await fetch("http://localhost:5000/currencies");
-            // window.location="/";
-            const data = await currencyRows.json();
+        const currencyRows = await fetch("http://localhost:5000/currencies");
+        const data = await currencyRows.json();
         setCurrencies(data);
-        console.log('a');
-
+        setcoinName(data[0].id);
     }
 
     return (

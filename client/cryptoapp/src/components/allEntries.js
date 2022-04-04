@@ -22,6 +22,7 @@ const AllEntries = () => {
     }
     useEffect(() => {
         getEntries();
+        getPrices();
     }, []);
 
     const remove = async (id) => {
@@ -51,7 +52,7 @@ const AllEntries = () => {
             
         }
     }
-    //TODO: add a new column for profits and a button that will do a get request on current prices
+    //TODO: add a new column for quantity
     return (
         <Fragment>
             {" "}
@@ -66,6 +67,7 @@ const AllEntries = () => {
                         <th>Edit</th>
                         <th>Delete</th>
                         <th>Current Price</th>
+                        <th>+/-</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,6 +80,8 @@ const AllEntries = () => {
                             <td><button onClick={() => getPrices()} className="btn btn-warning">
                                 {prices[entry.coin_name]}
                             </button></td>
+                            {/* // TODO: improve math here */}
+                            <td> {prices[entry.coin_name]/entry.buy_price} </td>
                         </tr>
 
                     ))}

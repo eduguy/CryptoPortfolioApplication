@@ -8,14 +8,15 @@ const EditEntry = ({entry}) => {
         e.preventDefault();
         try {
             const body = {price};
-            const req = await fetch("http://localhost:5000/entries/" + entry.entry_id + "/" + price, {
+            const req = await fetch("http://localhost:5000/entries/" + entry.entry_id, {
                 method: "PUT",
-                headers: {"Content-Type": "application/json"}
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body)
             });
             console.log(req);
         window.location ="/";
         } catch (err) {
-
+            console.error(err);
         }
     }
 
@@ -35,7 +36,7 @@ const EditEntry = ({entry}) => {
                     </div>
 
                     <div className="modal-body">
-                        <input type="text" onChange={e => setPrice(e.target.value)} value={price} className ="form-control"/>
+                        <input type="text" onChange={(e) => setPrice(parseInt(e.target.value))} value={price} className ="form-control"/>
                     </div>
 
                     <div className="modal-footer">

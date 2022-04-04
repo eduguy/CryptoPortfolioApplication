@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 // Create a purchase entry
-
+//TODO: Update code to include quantity
 app.post("/entries", async (req, res) => {
     try {
         const newData = req.body;
@@ -43,9 +43,12 @@ app.get("/currencies", async (req, res) => {
 // update a purchase entry with id, buy_price, coin_name
 app.put("/entries/:id", async (req, res) => {
     try {
-        let newPrice = req.body.buy_price;
+        console.log(req.body.price);
+        let newPrice = req.body.price;
         const data = await dbPool.query("UPDATE currencyEntry SET buy_price=$1 WHERE entry_id=$2 RETURNING *", [newPrice, req.params.id]);
         res.json(data.rows);
+        console.log('a');
+        
     } catch (err) {
         console.error(err);
     }
@@ -80,6 +83,15 @@ app.get("/prices", async (req, ret) => {
         console.error(error)
       })
 })
+
+app.get("/history", async (req,res) => {
+    try {
+        const data = await dbPool.query("SELECT * FROM portfoliohistory");
+        res.json(data.rows);
+    } catch (err) {
+        console.error(err);
+    }
+});
 
 app.listen(5000, () => {
     console.log("Started on 5000");
