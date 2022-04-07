@@ -31,7 +31,7 @@ const AllEntries = () => {
             }
 
             //TODO: should be based off of buy price, quantity, current prices
-
+            //TODO: WAY TOO MUCH DATA, need to reduce it somehow
             console.log(sum);
 
             let reqBody = {sum};
@@ -66,17 +66,18 @@ const AllEntries = () => {
         setEntries(entries.filter(entry => entry.entry_id !== id));
     }
 
+    // TODO: incorporate prices into the graph
     const getPrices = async(id) => {
         try {
             const response = await fetch("http://localhost:5000/prices/");
-
             let data = await response.json();
             let k = data.data;
             const decimalPlaces = 100000;
             setPrices({
-                "Bitcoin":  Math.round(k[0].quote.USD.price * decimalPlaces) / decimalPlaces,
-                "Ethereum": Math.round(k[1].quote.USD.price * decimalPlaces) / decimalPlaces
+                "Bitcoin":  Math.round(k.bitcoin.quote.USD.price * decimalPlaces) / decimalPlaces,
+                "Ethereum": Math.round(k.ethereum.quote.USD.price * decimalPlaces) / decimalPlaces
             });
+            console.log(k[0].quote.USD.price);
         } catch (err0) {
             
         }
@@ -110,8 +111,8 @@ const AllEntries = () => {
                             <td><button onClick={() => getPrices()} className="btn btn-warning">
                                 {prices[entry.coin_name]}
                             </button></td>
-                            {/* // TODO: improve math here */}
-                            <td> {prices[entry.coin_name]/entry.buy_price} </td>
+                            {/* TODO: maybe add some color? */}
+                            <td> {Math.round(((prices[entry.coin_name] - entry.buy_price)/entry.buy_price) * 100 * 1000)/1000}% </td>
                         </tr>
 
                     ))}

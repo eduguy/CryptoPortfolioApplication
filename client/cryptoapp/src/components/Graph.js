@@ -12,7 +12,7 @@ const Graph = (data) => {
         try {
             const response = await fetch("http://localhost:5000/history");
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
 
             setChartData({
                 labels: data.map((crypto) => crypto.columndatetime),

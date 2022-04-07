@@ -12,10 +12,9 @@ CREATE TABLE Currencies (
 
 CREATE TABLE currencyEntryTest (
     entry_id SERIAL PRIMARY KEY, 
-    buy_price INTEGER,
+    buy_price NUMERIC(10,6),
 	quantity NUMERIC(10,6),
-    coin_name VARCHAR(255) REFERENCES Currencies(id),
-	ColumnDateTime timestamp DEFAULT now()
+    coin_name VARCHAR(255) REFERENCES Currencies(id)
 )
 
 CREATE TABLE PortfolioHistory (

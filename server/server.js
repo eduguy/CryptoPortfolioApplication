@@ -9,10 +9,13 @@ app.use(express.json());
 
 // Create a purchase entry
 //TODO: Update code to include quantity
+            //TODO: support decimal numbers in here and client 
+
 app.post("/entries", async (req, res) => {
     try {
         const newData = req.body;
         const newElem = await dbPool.query("INSERT INTO currencyEntry(buy_price, coin_name) VALUES($1, $2) RETURNING *", [newData.buy_price, newData.coin_name]);
+
         res.json(newElem.rows);
     } catch (err) {
         console.error(err);
@@ -70,7 +73,7 @@ app.get("/prices", async (req, ret) => {
     const axios = require('axios')
 
     axios
-      .get('https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
+      .get('https://sandbox-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
           headers: {
             'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c'
           }
