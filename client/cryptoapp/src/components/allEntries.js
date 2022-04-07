@@ -27,15 +27,15 @@ const AllEntries = () => {
         try {
             let sum = 0;
             for (let en of entries) {
-                sum += en.buy_price;
+                sum += prices[en.coin_name] * en.quantity;
             }
 
-            //TODO: should be based off of buy price, quantity, current prices
             //TODO: WAY TOO MUCH DATA, need to reduce it somehow
             console.log(sum);
 
+            //TODO: On fresh refresh, value is going down to 0 because prices is not ready?
             let reqBody = {sum};
-            const response = await fetch("http://localhost:5000/history", {
+            await fetch("http://localhost:5000/history", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(reqBody)
@@ -52,7 +52,7 @@ const AllEntries = () => {
 
     useEffect(() => {
         updateHistory();
-    }, [entries]);
+    }, [entries, prices]);
 
     const remove = async (id) => {
         try {
@@ -66,7 +66,6 @@ const AllEntries = () => {
         setEntries(entries.filter(entry => entry.entry_id !== id));
     }
 
-    // TODO: incorporate prices into the graph
     const getPrices = async(id) => {
         try {
             const response = await fetch("http://localhost:5000/prices/");
@@ -77,12 +76,10 @@ const AllEntries = () => {
                 "Bitcoin":  Math.round(k.bitcoin.quote.USD.price * decimalPlaces) / decimalPlaces,
                 "Ethereum": Math.round(k.ethereum.quote.USD.price * decimalPlaces) / decimalPlaces
             });
-            console.log(k[0].quote.USD.price);
         } catch (err0) {
             
         }
     }
-    //TODO: add a new column for quantity
     return (
         <Fragment>
             {" "}
@@ -95,6 +92,7 @@ const AllEntries = () => {
                     <tr>
                         <th>Coin Name</th>
                         <th>Buy Price</th>
+                        <th>Quantity</th>
                         <th>Edit</th>
                         <th>Delete</th>
                         <th>Current Price</th>
@@ -106,6 +104,7 @@ const AllEntries = () => {
                         <tr key={entry.entry_id}>
                             <td > {entry.coin_name}</td>
                             <td> {entry.buy_price} </td>
+                            <td> {entry.quantity}</td>
                             <td> <EditEntry entry={entry}/> </td>
                             <td><button onClick={() => remove(entry.entry_id)} className="btn btn-danger"> Delete </button></td>
                             <td><button onClick={() => getPrices()} className="btn btn-warning">

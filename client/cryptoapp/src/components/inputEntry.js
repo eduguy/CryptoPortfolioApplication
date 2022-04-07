@@ -3,16 +3,15 @@ import React, {Fragment, useState, useEffect} from "react"
 const InputEntry = () => {
     const [buy_price, setCost] = useState(0);
     const [coin_name, setcoinName] = useState("");
+    const [quantity, setQuantity] = useState(0);
     const [currencies, setCurrencies] = useState([]);
-    // TODO: another state for quantity
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
             // TODO: do some basic client side validation of inputs
 
-            //TODO: support decimal numbers in here and DB
-            const reqBody = {buy_price, coin_name};
-            const response = await fetch("http://localhost:5000/entries", {
+            const reqBody = {buy_price, coin_name, quantity};
+            await fetch("http://localhost:5000/entries", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(reqBody)
@@ -39,7 +38,11 @@ const InputEntry = () => {
                 Crypto Portfolio Tracker
             </h1>
             <form className="d-flex" className = "text-center" onSubmit={onSubmitForm}>
+                <label>Buy Price</label>
                 <input type="text" value={buy_price} onChange={e => setCost(e.target.value)}/>
+                <label>Quantity (Decimal allowed) </label>
+                <input type="text" value={quantity} onChange={e => setQuantity(e.target.value)}/>
+
                 {/* <input type="text" value={coin_name} onChange={e => setcoinName(e.target.value)}></input> */}
                 <select id="select-coin" onChange={e => setcoinName(e.target.value)}>
                 {/* <option selected="selected" value="courses">Courses</option> */}

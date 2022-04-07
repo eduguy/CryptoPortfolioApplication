@@ -1,13 +1,13 @@
-import React, { Fragment, useState, useEffect } from "react"
+import React, {useState, useEffect } from "react"
 
 import LineChart from './Chart'
 const Graph = (data) => {
 
+  //TODO: Clear history button
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: []
       });    
-
     const getValues = async () => {
         try {
             const response = await fetch("http://localhost:5000/history");

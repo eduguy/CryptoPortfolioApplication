@@ -34,7 +34,7 @@ const EditEntry = ({entry}) => {
                         <h4 className="modal-title">Edit Currency Entry</h4>
                         <button type="button" onClick={(e) => setPrice(entry.buy_price)} className="close" data-dismiss="modal">&times;</button>
                     </div>
-
+{/* TODO: numeric field overload? need clients ide validation*/}
                     <div className="modal-body">
                         <input type="text" onChange={(e) => setPrice(parseInt(e.target.value))} value={price} className ="form-control"/>
                     </div>
