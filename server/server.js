@@ -8,13 +8,12 @@ app.use(cors());
 app.use(express.json());
 
 // Create a purchase entry
-//TODO: Update code to include quantity
-            //TODO: support decimal numbers in here and client 
 
 app.post("/entries", async (req, res) => {
     try {
         const newData = req.body;
-        const newElem = await dbPool.query("INSERT INTO currencyEntry(buy_price, coin_name) VALUES($1, $2) RETURNING *", [newData.buy_price, newData.coin_name]);
+        console.log(newData);
+        const newElem = await dbPool.query("INSERT INTO currencyEntry(buy_price, coin_name, quantity) VALUES($1, $2, $3) RETURNING *", [newData.buy_price, newData.coin_name, newData.quantity]);
 
         res.json(newElem.rows);
     } catch (err) {
@@ -67,6 +66,16 @@ app.delete("/entries/:id", async (req, res) => {
         console.error(err);
     }
 });
+
+app.delete("/history", async (req,res) => {
+    console.log("a");
+    try {
+        const data = await dbPool.query("DELETE FROM portfoliohistory");
+        res.json(data.rows);
+    } catch (err) {
+        console.error(err);
+    }
+})
 
 app.get("/prices", async (req, ret) => {
 
