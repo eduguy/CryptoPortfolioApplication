@@ -22,5 +22,6 @@ CREATE TABLE PortfolioHistory (
     ColumnDateTime timestamp DEFAULT now()
 )
 
-INSERT INTO Currencies(id) VALUES(Bitcoin);
-INSERT INTO Currencies(id) VALUES(Ethereum);
+INSERT INTO Currencies(id) VALUES('Bitcoin');
+INSERT INTO Currencies(id) VALUES('Ethereum');
+
