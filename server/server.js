@@ -67,6 +67,16 @@ app.delete("/entries/:id", async (req, res) => {
     }
 });
 
+app.delete("/history", async (req,res) => {
+    console.log("a");
+    try {
+        const data = await dbPool.query("DELETE FROM portfoliohistory");
+        res.json(data.rows);
+    } catch (err) {
+        console.error(err);
+    }
+})
+
 app.get("/prices", async (req, ret) => {
 
     const axios = require('axios')
