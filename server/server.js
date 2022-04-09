@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Create a purchase entry
 
-app.post("/entries", async (req, res) => {
+app.post("/api/entries", async (req, res) => {
     try {
         const newData = req.body;
         console.log(newData);
@@ -23,7 +23,7 @@ app.post("/entries", async (req, res) => {
 
 // get all purchase entry
 
-app.get("/entries", async (req, res) => {
+app.get("/api/entries", async (req, res) => {
     try {
         const data = await dbPool.query("SELECT * FROM currencyEntry");
         res.json(data.rows);
@@ -32,7 +32,7 @@ app.get("/entries", async (req, res) => {
     }
 });
 
-app.get("/currencies", async (req, res) => {
+app.get("/api/currencies", async (req, res) => {
     try {
         const data = await dbPool.query("SELECT * FROM currencies");
         res.json(data.rows);
@@ -43,7 +43,7 @@ app.get("/currencies", async (req, res) => {
 
 
 // update a purchase entry with id, buy_price, coin_name
-app.put("/entries/:id", async (req, res) => {
+app.put("/api/entries/:id", async (req, res) => {
     try {
         console.log(req.body.price);
         let newPrice = req.body.price;
@@ -58,7 +58,7 @@ app.put("/entries/:id", async (req, res) => {
 
 // delete an purchase entry
 
-app.delete("/entries/:id", async (req, res) => {
+app.delete("/api/entries/:id", async (req, res) => {
     try {
         const data = await dbPool.query("DELETE FROM currencyEntry WHERE entry_id = $1 RETURNING *", [req.params.id]);
         res.json(data.rows);
@@ -67,7 +67,7 @@ app.delete("/entries/:id", async (req, res) => {
     }
 });
 
-app.delete("/history", async (req,res) => {
+app.delete("/api/history", async (req,res) => {
     console.log("a");
     try {
         const data = await dbPool.query("DELETE FROM portfoliohistory");
@@ -77,7 +77,7 @@ app.delete("/history", async (req,res) => {
     }
 })
 
-app.get("/prices", async (req, ret) => {
+app.get("/api/prices", async (req, ret) => {
 
     const axios = require('axios')
 
@@ -96,7 +96,7 @@ app.get("/prices", async (req, ret) => {
       })
 })
 
-app.get("/history", async (req,res) => {
+app.get("/api/history", async (req,res) => {
     try {
         const data = await dbPool.query("SELECT * FROM portfoliohistory");
         res.json(data.rows);
@@ -105,7 +105,7 @@ app.get("/history", async (req,res) => {
     }
 });
 
-app.post("/history", async (req,res) => {
+app.post("/api/history", async (req,res) => {
     try {
         const newData = req.body;
         const newElem = await dbPool.query("INSERT INTO portfoliohistory(portfolio_value) VALUES($1) RETURNING *", [newData.sum]);

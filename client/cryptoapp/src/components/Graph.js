@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react"
+import baseURL from "../conn";
 
 import LineChart from './Chart'
 const Graph = (data) => {
@@ -9,7 +10,7 @@ const Graph = (data) => {
   });
   const getValues = async () => {
     try {
-      const response = await fetch("http://localhost:5000/history");
+      const response = await fetch(baseURL + "history");
       const data = await response.json();
       // console.log(data);
 
@@ -31,7 +32,7 @@ const Graph = (data) => {
   }
   const deleteHistory = async () => {
     try {
-      await fetch("http://localhost:5000/history", {
+      await fetch(baseURL + "history", {
         method: "DELETE"
       });
       setChartData({

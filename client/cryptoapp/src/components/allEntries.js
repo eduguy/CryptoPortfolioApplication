@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useRef } from "react"
+import baseURL from "../conn";
 import EditEntry from "./editEntry";
 import Graph from './Graph';
 
@@ -11,10 +12,10 @@ const AllEntries = () => {
     });
     const [sumData, setSumData] = useState(0);
     const isMounted = useRef(false);
-    
+
     const getEntries = async () => {
         try {
-            const response = await fetch("http://localhost:5000/entries");
+            const response = await fetch(baseURL + "entries");
             const data = await response.json();
             // console.log(data);
             setEntries(data);
@@ -32,13 +33,13 @@ const AllEntries = () => {
             for (let en of entries) {
                 sum += prices[en.coin_name] * en.quantity;
             }
-            
+
             if (sum === 0) {
                 return;
             }
             //TODO: WAY TOO MUCH DATA, need to reduce it somehow
             let reqBody = { sum };
-            await fetch("http://localhost:5000/history", {
+            await fetch(baseURL + "history", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(reqBody)
@@ -66,7 +67,7 @@ const AllEntries = () => {
 
     const remove = async (id) => {
         try {
-            const response = await fetch("http://localhost:5000/entries/" + id, {
+            const response = await fetch(baseURL + "entries/" + id, {
                 method: "DELETE"
             });
             console.log(response);
@@ -78,7 +79,7 @@ const AllEntries = () => {
 
     const getPrices = async (id) => {
         try {
-            const response = await fetch("http://localhost:5000/prices/");
+            const response = await fetch(baseURL + "prices/");
             let data = await response.json();
             let k = data.data;
             const decimalPlaces = 100000;
