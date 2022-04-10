@@ -8,7 +8,7 @@ const EditEntry = ({entry}) => {
         e.preventDefault();
         try {
             const body = {price};
-            const req = await fetch(baseURL + "/api/entries/" + entry.entry_id, {
+            const req = await fetch(baseURL + "entries/" + entry.entry_id, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)

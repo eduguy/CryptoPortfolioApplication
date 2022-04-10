@@ -12,7 +12,6 @@ app.use(express.json());
 app.post("/api/entries", async (req, res) => {
     try {
         const newData = req.body;
-        console.log(newData);
         const newElem = await dbPool.query("INSERT INTO currencyEntry(buy_price, coin_name, quantity) VALUES($1, $2, $3) RETURNING *", [newData.buy_price, newData.coin_name, newData.quantity]);
 
         res.json(newElem.rows);
@@ -50,7 +49,7 @@ app.put("/api/entries/:id", async (req, res) => {
         const data = await dbPool.query("UPDATE currencyEntry SET buy_price=$1 WHERE entry_id=$2 RETURNING *", [newPrice, req.params.id]);
         res.json(data.rows);
         console.log('a');
-        
+
     } catch (err) {
         console.error(err);
     }
@@ -67,7 +66,7 @@ app.delete("/api/entries/:id", async (req, res) => {
     }
 });
 
-app.delete("/api/history", async (req,res) => {
+app.delete("/api/history", async (req, res) => {
     console.log("a");
     try {
         const data = await dbPool.query("DELETE FROM portfoliohistory");
@@ -81,22 +80,37 @@ app.get("/api/prices", async (req, ret) => {
 
     const axios = require('axios')
 
-    axios
-      .get('https://sandbox-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
-          headers: {
-            'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c'
-          }
-      })
-      .then(res => {
-        // console.log(`statusCode: ${res.status}`)
-        ret.json(res.data);
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    if (process.env.NODE_ENV === 'dev') {
+        axios
+            .get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
+                headers: {
+                    'X-CMC_PRO_API_KEY': process.env.COINAPI
+                }
+            })
+            .then(res => {
+                ret.json(res.data);
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    } else {
+        axios
+            .get('https://sandbox-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
+                headers: {
+                    'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c'
+                }
+            })
+            .then(res => {
+                ret.json(res.data);
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }
+
 })
 
-app.get("/api/history", async (req,res) => {
+app.get("/api/history", async (req, res) => {
     try {
         const data = await dbPool.query("SELECT * FROM portfoliohistory");
         res.json(data.rows);
@@ -105,7 +119,7 @@ app.get("/api/history", async (req,res) => {
     }
 });
 
-app.post("/api/history", async (req,res) => {
+app.post("/api/history", async (req, res) => {
     try {
         const newData = req.body;
         const newElem = await dbPool.query("INSERT INTO portfoliohistory(portfolio_value) VALUES($1) RETURNING *", [newData.sum]);
