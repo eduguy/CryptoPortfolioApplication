@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-
+import baseURL from "../conn";
 const EditEntry = ({entry}) => {
 
     const [price, setPrice] = useState(entry.buy_price);
@@ -8,7 +8,7 @@ const EditEntry = ({entry}) => {
         e.preventDefault();
         try {
             const body = {price};
-            const req = await fetch("http://localhost:5000/entries/" + entry.entry_id, {
+            const req = await fetch(baseURL + "entries/" + entry.entry_id, {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
