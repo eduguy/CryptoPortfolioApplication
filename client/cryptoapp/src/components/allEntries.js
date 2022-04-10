@@ -83,10 +83,18 @@ const AllEntries = () => {
             let data = await response.json();
             let k = data.data;
             const decimalPlaces = 100000;
-            setPrices({
-                "Bitcoin": Math.round(k['1'].quote.USD.price * decimalPlaces) / decimalPlaces,
-                "Ethereum": Math.round(k['1027'].quote.USD.price * decimalPlaces) / decimalPlaces
-            });
+            if (process.env.NODE_ENV === 'production') {
+                setPrices({
+                    "Bitcoin": Math.round(k['1'].quote.USD.price * decimalPlaces) / decimalPlaces,
+                    "Ethereum": Math.round(k['1027'].quote.USD.price * decimalPlaces) / decimalPlaces
+                });
+            } else {
+                setPrices({
+                    "Bitcoin": Math.round(k.bitcoin.quote.USD.price * decimalPlaces) / decimalPlaces,
+                    "Ethereum": Math.round(k.ethereum.quote.USD.price * decimalPlaces) / decimalPlaces
+                });
+            }
+
         } catch (err0) {
 
         }

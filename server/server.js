@@ -80,7 +80,7 @@ app.get("/api/prices", async (req, ret) => {
 
     const axios = require('axios')
 
-    if (process.env.NODE_ENV === 'dev') {
+    if (process.env.NODE_ENV === 'production') {
         axios
             .get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
                 headers: {
