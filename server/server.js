@@ -7,6 +7,8 @@ const { resolve } = require('path');
 app.use(cors());
 app.use(express.json());
 
+//TODO: Pass errors back to front end so when DB fails, there is indication on client side
+//TODO: Create an accounts system
 // Create a purchase entry
 
 app.post("/api/entries", async (req, res) => {

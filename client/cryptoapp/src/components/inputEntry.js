@@ -1,11 +1,13 @@
-import React, { Fragment, useState, useEffect } from "react"
+import React, { Fragment, useState, useEffect, useContext } from "react"
 import baseURL from "../conn";
+import { Context } from "./Login";
 
 const InputEntry = () => {
     const [buy_price, setCost] = useState(0);
     const [coin_name, setcoinName] = useState("");
     const [quantity, setQuantity] = useState(0);
     const [currencies, setCurrencies] = useState([]);
+    const [user, setUser] = useContext(Context);
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {

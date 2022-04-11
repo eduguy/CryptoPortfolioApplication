@@ -1,7 +1,8 @@
-import React, { Fragment, useState, useEffect, useRef } from "react"
+import React, { Fragment, useState, useEffect, useRef, useContext } from "react"
 import baseURL from "../conn";
 import EditEntry from "./editEntry";
 import Graph from './Graph';
+import { Context } from "./Login";
 
 const AllEntries = () => {
 
@@ -13,6 +14,7 @@ const AllEntries = () => {
     const [sumData, setSumData] = useState(0);
     const isMounted = useRef(false);
 
+    const [user, setUser] = useContext(Context);
     const getEntries = async () => {
         try {
             const response = await fetch(baseURL + "entries");

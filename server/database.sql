@@ -9,7 +9,7 @@ CREATE DATABASE CryptoApp;
 CREATE TABLE Currencies (
     id VARCHAR(255) PRIMARY KEY 
 )
-
+-- TODO: Increase portoflio history size
 CREATE TABLE currencyEntry (
     entry_id SERIAL PRIMARY KEY, 
     buy_price NUMERIC(10,6),
