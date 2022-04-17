@@ -131,6 +131,28 @@ app.post("/api/history", async (req, res) => {
     }
 });
 
+app.get("/api/users", async (req, res) => {
+    try {
+        const newElem = await dbPool.query("SELECT Username FROM Users");
+        res.json(newElem.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(400);
+
+    }
+});
+
+app.post("/api/users", async (req, res) => {
+    try {
+        let user = req.body.user;
+        const newElem = await dbPool.query("INSERT INTO users(Username) VALUES ($1) RETURNING *", [user]);
+        res.json(newElem.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(400);
+    }
+});
+
 app.listen(5000, () => {
     console.log("Started on 5000");
 });

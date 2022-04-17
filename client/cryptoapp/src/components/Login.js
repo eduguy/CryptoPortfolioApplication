@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment, Children } from "react"
-
+import baseURL from "../conn";
 export const Context = React.createContext();
 
 const Login = ({ children }) => {
@@ -9,13 +9,39 @@ const Login = ({ children }) => {
     const [displayedUser, setDisplayedUser] = useState("");
     const loginUser = async (e) => {
         e.preventDefault();
-        setDisplayedUser(userBox);
+        try {
+            const req = await fetch(baseURL + "users");
+            const data = await req.json();
+            console.log(data);
+            if (data.filter(obj => obj.username === userBox).length > 0) {
+                setDisplayedUser(userBox);
+            } else {
+                throw 'error';
+            }
+        } catch (err) {
+            //TODO: Show some error here on the screen
+            console.error(err);
+        }
 
     }
-// TODO: Both of these need database calls
+    // TODO: Both of these need database calls
     const registerUser = async (e) => {
         e.preventDefault();
-        setDisplayedUser(registerBox);
+        try {
+            const body = { user: registerBox };
+            const req = await fetch(baseURL + "users", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            setDisplayedUser(registerBox);
+        } catch (err) {
+            //TODO: Show some error here on the screen
+            console.error(err);
+        }
+
+
+
     }
 
     useEffect(() => {

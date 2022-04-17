@@ -1,14 +1,12 @@
 CREATE DATABASE CryptoApp;
 
--- CREATE TABLE currencyEntry (
---     entry_id SERIAL PRIMARY KEY, 
---     buy_price INTEGER(),
---     coin_name VARCHAR(255) REFERENCES Currencies(id)
--- )
-
 CREATE TABLE Currencies (
     id VARCHAR(255) PRIMARY KEY 
 )
+
+INSERT INTO Currencies(id) VALUES('Bitcoin');
+INSERT INTO Currencies(id) VALUES('Ethereum');
+
 -- TODO: Increase portoflio history size
 CREATE TABLE currencyEntry (
     entry_id SERIAL PRIMARY KEY, 
@@ -22,6 +20,14 @@ CREATE TABLE PortfolioHistory (
     ColumnDateTime timestamp DEFAULT now()
 )
 
-INSERT INTO Currencies(id) VALUES('Bitcoin');
-INSERT INTO Currencies(id) VALUES('Ethereum');
+CREATE TABLE Users (
+    Username VARCHAR(255) UNIQUE
+)
+
+ALTER TABLE currencyEntry
+ADD user VARCHAR(255) REFERENCES Users(Username);
+
+ALTER TABLE PortfolioHistory
+ADD user VARCHAR(255) REFERENCES Users(Username;
+
 
