@@ -7,7 +7,6 @@ const { resolve } = require('path');
 app.use(cors());
 app.use(express.json());
 
-//TODO: Pass errors back to front end so when DB fails, there is indication on client side
 //TODO: Create an accounts system
 // Create a purchase entry
 
@@ -19,6 +18,8 @@ app.post("/api/entries", async (req, res) => {
         res.json(newElem.rows);
     } catch (err) {
         console.error(err);
+        req.status(400);
+        res.end('Error');
     }
 })
 
@@ -30,6 +31,8 @@ app.get("/api/entries", async (req, res) => {
         res.json(data.rows);
     } catch (err) {
         console.error(err);
+        req.status(400);
+        res.end('Error');
     }
 });
 
@@ -39,6 +42,8 @@ app.get("/api/currencies", async (req, res) => {
         res.json(data.rows);
     } catch (err) {
         console.error(err);
+        req.status(400);
+        res.end('Error');
     }
 });
 
@@ -54,6 +59,8 @@ app.put("/api/entries/:id", async (req, res) => {
 
     } catch (err) {
         console.error(err);
+        req.status(400);
+        res.end('Error');
     }
 });
 
@@ -65,6 +72,8 @@ app.delete("/api/entries/:id", async (req, res) => {
         res.json(data.rows);
     } catch (err) {
         console.error(err);
+        req.status(400);
+        res.end('Error');
     }
 });
 
@@ -75,6 +84,8 @@ app.delete("/api/history", async (req, res) => {
         res.json(data.rows);
     } catch (err) {
         console.error(err);
+        req.status(400);
+        res.end('Error');
     }
 })
 
@@ -82,32 +93,37 @@ app.get("/api/prices", async (req, ret) => {
 
     const axios = require('axios')
 
-    if (process.env.NODE_ENV === 'production') {
-        axios
-            .get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
-                headers: {
-                    'X-CMC_PRO_API_KEY': process.env.COINAPI
-                }
-            })
-            .then(res => {
-                ret.json(res.data);
-            })
-            .catch(error => {
-                console.error(error)
-            })
-    } else {
-        axios
-            .get('https://sandbox-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
-                headers: {
-                    'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c'
-                }
-            })
-            .then(res => {
-                ret.json(res.data);
-            })
-            .catch(error => {
-                console.error(error)
-            })
+    try {
+        if (process.env.NODE_ENV === 'production') {
+            axios
+                .get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
+                    headers: {
+                        'X-CMC_PRO_API_KEY': process.env.COINAPI
+                    }
+                })
+                .then(res => {
+                    ret.json(res.data);
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+        } else {
+            axios
+                .get('https://sandbox-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
+                    headers: {
+                        'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c'
+                    }
+                })
+                .then(res => {
+                    ret.json(res.data);
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+        }
+    } catch (err) {
+        req.status(400);
+        res.end('Error');
     }
 
 })
@@ -118,6 +134,8 @@ app.get("/api/history", async (req, res) => {
         res.json(data.rows);
     } catch (err) {
         console.error(err);
+        req.status(400);
+        res.end('Error');
     }
 });
 
@@ -128,6 +146,9 @@ app.post("/api/history", async (req, res) => {
         res.json(newElem.rows);
     } catch (err) {
         console.error(err);
+        req.status(400);
+        res.end('Error');
+
     }
 });
 
@@ -138,7 +159,7 @@ app.get("/api/users", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(400);
-
+        res.end('Error');
     }
 });
 
@@ -150,6 +171,7 @@ app.post("/api/users", async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(400);
+        res.end('Error');
     }
 });
 

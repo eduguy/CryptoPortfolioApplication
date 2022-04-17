@@ -12,12 +12,13 @@ const Login = ({ children }) => {
         try {
             const req = await fetch(baseURL + "users");
             const data = await req.json();
-            console.log(data);
+
             if (data.filter(obj => obj.username === userBox).length > 0) {
                 setDisplayedUser(userBox);
             } else {
-                throw 'error';
+                alert("This username wasn't found");
             }
+
         } catch (err) {
             //TODO: Show some error here on the screen
             console.error(err);
@@ -33,8 +34,13 @@ const Login = ({ children }) => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
+            }).then((res) => {
+                if (res.status === 400) {
+                    alert("There was an error, likely duplicate username");
+                }
             });
             setDisplayedUser(registerBox);
+
         } catch (err) {
             //TODO: Show some error here on the screen
             console.error(err);

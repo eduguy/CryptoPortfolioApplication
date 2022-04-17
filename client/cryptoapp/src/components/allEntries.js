@@ -17,6 +17,8 @@ const AllEntries = () => {
     const [user, setUser] = useContext(Context);
     const getEntries = async () => {
         try {
+            // TODO: Add user to reqBody
+
             const response = await fetch(baseURL + "entries");
             const data = await response.json();
             // console.log(data);
@@ -41,6 +43,8 @@ const AllEntries = () => {
             }
             //TODO: WAY TOO MUCH DATA, need to reduce it somehow
             let reqBody = { sum };
+            // TODO: Add user to reqBody
+
             await fetch(baseURL + "history", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -69,6 +73,7 @@ const AllEntries = () => {
 
     const remove = async (id) => {
         try {
+            // TODO: Add user to reqBody
             const response = await fetch(baseURL + "entries/" + id, {
                 method: "DELETE"
             });

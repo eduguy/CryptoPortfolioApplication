@@ -12,7 +12,7 @@ const InputEntry = () => {
         e.preventDefault();
         try {
             // TODO: do some basic client side validation of inputs
-
+            // TODO: Add user to reqBody
             const reqBody = { buy_price, coin_name, quantity };
             await fetch(baseURL + "entries", {
                 method: "POST",

@@ -10,6 +10,7 @@ const Graph = (data) => {
   });
   const getValues = async () => {
     try {
+      // TODO: Add user to reqBody
       const response = await fetch(baseURL + "history");
       const data = await response.json();
       // console.log(data);
