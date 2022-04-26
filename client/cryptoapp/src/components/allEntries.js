@@ -5,7 +5,7 @@ import Graph from './Graph';
 import { Context } from "./Login";
 
 const AllEntries = () => {
-
+//TODO: When switiching users, sometimes the states get saved or something and a different user gets this users history
     const [entries, setEntries] = useState([]);
     const [prices, setPrices] = useState({
         "Bitcoin": 0,
@@ -17,9 +17,8 @@ const AllEntries = () => {
     const [user, setUser] = useContext(Context);
     const getEntries = async () => {
         try {
-            // TODO: Add user to reqBody
 
-            const response = await fetch(baseURL + "entries");
+            const response = await fetch(baseURL + "entries/" + user);
             const data = await response.json();
             // console.log(data);
             setEntries(data);
@@ -37,13 +36,13 @@ const AllEntries = () => {
             for (let en of entries) {
                 sum += prices[en.coin_name] * en.quantity;
             }
+            //TODO: Find a better way to handle asyncrony of all these db calls
 
             if (sum === 0) {
                 return;
             }
             //TODO: WAY TOO MUCH DATA, need to reduce it somehow
-            let reqBody = { sum };
-            // TODO: Add user to reqBody
+            let reqBody = { sum, user };
 
             await fetch(baseURL + "history", {
                 method: "POST",
@@ -52,7 +51,6 @@ const AllEntries = () => {
             });
             setSumData(sum);
 
-            //TODO: Find a better way to handle asyncrony of all these db calls
 
         } catch (err) {
             console.error(err);
@@ -64,6 +62,11 @@ const AllEntries = () => {
     }, []);
 
     useEffect(() => {
+        getEntries();
+        updateHistory();
+    }, [user])
+
+    useEffect(() => {
         if (isMounted.current) {
             updateHistory();
         } else {
@@ -72,10 +75,12 @@ const AllEntries = () => {
     }, [entries, prices]);
 
     const remove = async (id) => {
+        //TODO: Not deleting history
+        
         try {
-            // TODO: Add user to reqBody
             const response = await fetch(baseURL + "entries/" + id, {
-                method: "DELETE"
+                method: "DELETE",
+                body: { user }
             });
             console.log(response);
         } catch (err) {

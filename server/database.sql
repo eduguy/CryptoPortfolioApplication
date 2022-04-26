@@ -25,9 +25,9 @@ CREATE TABLE Users (
 )
 
 ALTER TABLE currencyEntry
-ADD user VARCHAR(255) REFERENCES Users(Username);
+ADD Username VARCHAR(255) REFERENCES Users(Username);
 
 ALTER TABLE PortfolioHistory
-ADD user VARCHAR(255) REFERENCES Users(Username;
+ADD Username VARCHAR(255) REFERENCES Users(Username);
 
 

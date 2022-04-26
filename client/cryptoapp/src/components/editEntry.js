@@ -8,7 +8,6 @@ const EditEntry = ({ entry }) => {
         e.preventDefault();
         try {
             const body = { price };
-            // TODO: Add user to reqBody
 
             const req = await fetch(baseURL + "entries/" + entry.entry_id, {
                 method: "PUT",
@@ -21,7 +20,7 @@ const EditEntry = ({ entry }) => {
             console.error(err);
         }
     }
-
+    //TODO: Editing doesn't really work that well, pretty useless feature though so not a big deal
     return <Fragment>
 
         <button type="button" className="btn btn-warning" data-toggle="modal" data-target={`#${entry.entry_id}`}>

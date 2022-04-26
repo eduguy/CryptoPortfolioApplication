@@ -20,12 +20,12 @@ const Login = ({ children }) => {
             }
 
         } catch (err) {
-            //TODO: Show some error here on the screen
             console.error(err);
+            alert ("There was an error.")
+
         }
 
     }
-    // TODO: Both of these need database calls
     const registerUser = async (e) => {
         e.preventDefault();
         try {
@@ -42,8 +42,8 @@ const Login = ({ children }) => {
             setDisplayedUser(registerBox);
 
         } catch (err) {
-            //TODO: Show some error here on the screen
             console.error(err);
+            alert ("There was an error.")
         }
 
 
