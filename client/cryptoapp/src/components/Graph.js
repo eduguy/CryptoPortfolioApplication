@@ -31,7 +31,7 @@ const Graph = (data) => {
   }
   const deleteHistory = async () => {
     try {
-      await fetch(baseURL + "history", {
+      await fetch(baseURL + "history/" + user, {
         method: "DELETE"
       });
       setChartData({

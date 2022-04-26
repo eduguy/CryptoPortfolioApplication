@@ -75,12 +75,10 @@ const AllEntries = () => {
     }, [entries, prices]);
 
     const remove = async (id) => {
-        //TODO: Not deleting history
         
         try {
             const response = await fetch(baseURL + "entries/" + id, {
-                method: "DELETE",
-                body: { user }
+                method: "DELETE"
             });
             console.log(response);
         } catch (err) {

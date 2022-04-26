@@ -75,9 +75,9 @@ app.delete("/api/entries/:id", async (req, res) => {
     }
 });
 
-app.delete("/api/history", async (req, res) => {
+app.delete("/api/history/:user", async (req, res) => {
     try {
-        const data = await dbPool.query("DELETE FROM portfoliohistory WHERE username = $1", [req.body.user]);
+        const data = await dbPool.query("DELETE FROM portfoliohistory WHERE username = $1", [req.params.user]);
         res.json(data.rows);
     } catch (err) {
         console.error(err);
