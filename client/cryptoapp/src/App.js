@@ -8,6 +8,9 @@ import Login from './components/Login';
 function App() {
   return (
     <Fragment>
+      <h1 className="text-center">
+        Crypto Portfolio Tracker
+      </h1>
       <Login>
         <InputEntry />
         <AllEntries />

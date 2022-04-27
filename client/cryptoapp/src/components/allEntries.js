@@ -5,7 +5,6 @@ import Graph from './Graph';
 import { Context } from "./Login";
 
 const AllEntries = () => {
-//TODO: When switiching users, sometimes the states get saved or something and a different user gets this users history
     const [entries, setEntries] = useState([]);
     const [prices, setPrices] = useState({
         "Bitcoin": 0,
@@ -75,7 +74,7 @@ const AllEntries = () => {
     }, [entries, prices]);
 
     const remove = async (id) => {
-        
+
         try {
             const response = await fetch(baseURL + "entries/" + id, {
                 method: "DELETE"
@@ -111,43 +110,49 @@ const AllEntries = () => {
     }
     return (
         <Fragment>
-            {" "}
-            <Graph data={sumData} />
-            <h2 className="text-center">
-                Your coins:
-            </h2>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Coin Name</th>
-                        <th>Buy Price</th>
-                        <th>Quantity</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                        <th>Current Price</th>
-                        <th>+/-</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {entries.map(entry => (
-                        <tr key={entry.entry_id}>
-                            <td > {entry.coin_name}</td>
-                            <td> {entry.buy_price} </td>
-                            <td> {entry.quantity}</td>
-                            <td> <EditEntry entry={entry} /> </td>
-                            <td><button onClick={() => remove(entry.entry_id)} className="btn btn-danger"> Delete </button></td>
-                            <td><button onClick={() => getPrices()} className="btn btn-warning">
-                                {prices[entry.coin_name]}
-                            </button></td>
-                            {/* TODO: maybe add some color? */}
-                            <td> {Math.round(((prices[entry.coin_name] - entry.buy_price) / entry.buy_price) * 100 * 1000) / 1000}% </td>
-                        </tr>
+            {
+                user &&
+                <Fragment>
+                    {" "}
+                    <Graph data={sumData} />
+                    <h2 className="text-center">
+                        Your coins:
+                    </h2>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Coin Name</th>
+                                <th>Buy Price</th>
+                                <th>Quantity</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                                <th>Current Price</th>
+                                <th>+/-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {entries.map(entry => (
+                                <tr key={entry.entry_id}>
+                                    <td > {entry.coin_name}</td>
+                                    <td> {entry.buy_price} </td>
+                                    <td> {entry.quantity}</td>
+                                    <td> <EditEntry entry={entry} /> </td>
+                                    <td><button onClick={() => remove(entry.entry_id)} className="btn btn-danger"> Delete </button></td>
+                                    <td><button onClick={() => getPrices()} className="btn btn-warning">
+                                        {prices[entry.coin_name]}
+                                    </button></td>
+                                    {/* TODO: maybe add some color? */}
+                                    <td> {Math.round(((prices[entry.coin_name] - entry.buy_price) / entry.buy_price) * 100 * 1000) / 1000}% </td>
+                                </tr>
 
-                    ))}
+                            ))}
 
 
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </Fragment>
+            }
+
 
         </Fragment>
     )

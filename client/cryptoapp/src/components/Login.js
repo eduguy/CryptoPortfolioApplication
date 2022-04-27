@@ -8,6 +8,10 @@ const Login = ({ children }) => {
     const [registerBox, setRegisterBox] = useState("");
     const [displayedUser, setDisplayedUser] = useState("");
     const loginUser = async (e) => {
+        if (displayedUser) {
+            alert("Sign out of the current user first");
+            return;
+        }
         e.preventDefault();
         try {
             const req = await fetch(baseURL + "users");
@@ -21,12 +25,17 @@ const Login = ({ children }) => {
 
         } catch (err) {
             console.error(err);
-            alert ("There was an error.")
+            alert("There was an error.")
 
         }
 
     }
     const registerUser = async (e) => {
+        if (displayedUser) {
+            alert("Sign out of the current user first");
+            return;
+
+        }
         e.preventDefault();
         try {
             const body = { user: registerBox };
@@ -43,15 +52,20 @@ const Login = ({ children }) => {
 
         } catch (err) {
             console.error(err);
-            alert ("There was an error.")
+            alert("There was an error.")
         }
+    }
 
-
-
+    const signOut = async (e) => {
+        window.sessionStorage.clear();
+        window.location = "/";
     }
 
     useEffect(() => {
-        setDisplayedUser(window.sessionStorage.getItem('user'));
+        let savedUser = window.sessionStorage.getItem('user');
+        if (savedUser) {
+            setDisplayedUser(savedUser);
+        }
     }, []);
 
     useEffect(() => {
@@ -60,21 +74,35 @@ const Login = ({ children }) => {
 
     return (
         <Fragment>
-            <form onSubmit={loginUser}>
-                <input type="text" onChange={e => setUserBox(e.target.value)}>
-                </input>
-                <button >
-                    Login
-                </button>
-            </form>
-            <form onSubmit={registerUser}>
-                <input type="text" onChange={e => setRegisterBox(e.target.value)}>
-                </input>
-                <button >
-                    Register
-                </button>
-            </form>
-            <label> Currently signed in: {displayedUser}</label>
+            <div className={!displayedUser ? 'loginDiv' : null}>
+                {
+                    !displayedUser && <label className="label label-default"> Please register or login to your account: </label>
+                }
+                <form className="form" onSubmit={loginUser}>
+                    <input type="text" onChange={e => setUserBox(e.target.value)}>
+                    </input>
+                    <button className="btn btn-success">
+                        Login
+                    </button>
+                </form>
+                <form className="form" onSubmit={registerUser}>
+                    <input type="text" onChange={e => setRegisterBox(e.target.value)}>
+                    </input>
+                    <button className="btn btn-success" >
+                        Register
+                    </button>
+                </form>
+
+                {
+                    displayedUser &&
+                    <Fragment>
+                        <label className="label label-default"> Currently signed in: {displayedUser}</label>
+                        <button className="btn btn-warning" onClick={signOut}> Sign out </button>
+
+                    </Fragment>
+                }
+
+            </div>
 
 
             <Context.Provider value={[displayedUser, setDisplayedUser]}>{children}</Context.Provider>
