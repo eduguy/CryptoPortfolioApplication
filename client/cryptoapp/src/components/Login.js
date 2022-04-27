@@ -78,20 +78,27 @@ const Login = ({ children }) => {
                 {
                     !displayedUser && <label className="label label-default"> Please register or login to your account: </label>
                 }
-                <form className="form" onSubmit={loginUser}>
-                    <input type="text" onChange={e => setUserBox(e.target.value)}>
-                    </input>
-                    <button className="btn btn-success">
-                        Login
-                    </button>
-                </form>
-                <form className="form" onSubmit={registerUser}>
-                    <input type="text" onChange={e => setRegisterBox(e.target.value)}>
-                    </input>
-                    <button className="btn btn-success" >
-                        Register
-                    </button>
-                </form>
+                <div className="form-group">
+
+                    <form className="form" onSubmit={loginUser}>
+                        <input type="text" onChange={e => setUserBox(e.target.value)}>
+                        </input>
+                        <button className="btn btn-success">
+                            Login
+                        </button>
+                    </form>
+                </div>
+                <div className="form-group">
+
+                    <form className="form" onSubmit={registerUser}>
+                        <input type="text" onChange={e => setRegisterBox(e.target.value)}>
+                        </input>
+                        <button className="btn btn-success" >
+                            Register
+                        </button>
+                    </form>
+                </div>
+
 
                 {
                     displayedUser &&
