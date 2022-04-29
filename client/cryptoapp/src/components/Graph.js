@@ -1,8 +1,9 @@
-import React, { useState, useEffect, Fragment } from "react"
+import React, { useState, useEffect, Fragment, useContext } from "react"
 import baseURL from "../conn";
-
+import { Context } from "./Login";
 import LineChart from './Chart'
 const Graph = (data) => {
+  const [user, setUser] = useContext(Context);
 
   const [chartData, setChartData] = useState({
     labels: [],
@@ -10,10 +11,8 @@ const Graph = (data) => {
   });
   const getValues = async () => {
     try {
-      const response = await fetch(baseURL + "history");
+      const response = await fetch(baseURL + "history/" + user);
       const data = await response.json();
-      // console.log(data);
-
       setChartData({
         labels: data.map((crypto) => crypto.columndatetime),
         datasets: [
@@ -32,7 +31,7 @@ const Graph = (data) => {
   }
   const deleteHistory = async () => {
     try {
-      await fetch(baseURL + "history", {
+      await fetch(baseURL + "history/" + user, {
         method: "DELETE"
       });
       setChartData({
