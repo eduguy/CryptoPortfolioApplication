@@ -43,12 +43,13 @@ const Login = ({ children }) => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
-            }).then((res) => {
-                if (res.status === 400) {
-                    alert("There was an error, likely duplicate username");
-                }
-                return;
             });
+
+            if (req.status === 400) {
+                alert("There was an error, likely duplicate username");
+                return;
+            }
+
             setDisplayedUser(registerBox);
 
         } catch (err) {
