@@ -47,6 +47,7 @@ const Login = ({ children }) => {
                 if (res.status === 400) {
                     alert("There was an error, likely duplicate username");
                 }
+                return;
             });
             setDisplayedUser(registerBox);
 
