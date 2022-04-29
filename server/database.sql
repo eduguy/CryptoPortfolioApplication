@@ -7,27 +7,23 @@ CREATE TABLE Currencies (
 INSERT INTO Currencies(id) VALUES('Bitcoin');
 INSERT INTO Currencies(id) VALUES('Ethereum');
 
--- TODO: Increase portoflio history size
 CREATE TABLE currencyEntry (
     entry_id SERIAL PRIMARY KEY, 
-    buy_price NUMERIC(10,6),
+    buy_price NUMERIC(12,6),
 	quantity NUMERIC(10,6),
-    coin_name VARCHAR(255) REFERENCES Currencies(id)
+    coin_name VARCHAR(255) REFERENCES Currencies(id),
+    Username VARCHAR(255) REFERENCES Users(Username)
 )
 
 CREATE TABLE PortfolioHistory (
-    portfolio_value NUMERIC(15, 6),
-    ColumnDateTime timestamp DEFAULT now()
+    portfolio_value NUMERIC(17, 6),
+    ColumnDateTime timestamp DEFAULT now(),
+    Username VARCHAR(255) REFERENCES Users(Username)
+
 )
 
 CREATE TABLE Users (
     Username VARCHAR(255) UNIQUE
 )
-
-ALTER TABLE currencyEntry
-ADD Username VARCHAR(255) REFERENCES Users(Username);
-
-ALTER TABLE PortfolioHistory
-ADD Username VARCHAR(255) REFERENCES Users(Username);
 
 
