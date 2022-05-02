@@ -73,35 +73,34 @@ const Login = ({ children }) => {
     useEffect(() => {
         window.sessionStorage.setItem('user', displayedUser);
     }, [displayedUser]);
-
     return (
         <Fragment>
             <div className={!displayedUser ? 'loginDiv' : null}>
                 {
-                    !displayedUser && <label className="label label-default"> Please register or login to your account: </label>
+                    !displayedUser &&
+                    <Fragment>
+                        <label className="label label-default"> Please register or login to your account: </label>
+                        <div className="form-group">
+                            <form className="form" onSubmit={loginUser}>
+                                <input type="text" onChange={e => setUserBox(e.target.value)}>
+                                </input>
+                                <button className="btn btn-success">
+                                    Login
+                                </button>
+                            </form>
+                        </div>
+                        <div className="form-group">
+
+                            <form className="form" onSubmit={registerUser}>
+                                <input type="text" onChange={e => setRegisterBox(e.target.value)}>
+                                </input>
+                                <button className="btn btn-success" >
+                                    Register
+                                </button>
+                            </form>
+                        </div>
+                    </Fragment>
                 }
-                <div className="form-group">
-
-                    <form className="form" onSubmit={loginUser}>
-                        <input type="text" onChange={e => setUserBox(e.target.value)}>
-                        </input>
-                        <button className="btn btn-success">
-                            Login
-                        </button>
-                    </form>
-                </div>
-                <div className="form-group">
-
-                    <form className="form" onSubmit={registerUser}>
-                        <input type="text" onChange={e => setRegisterBox(e.target.value)}>
-                        </input>
-                        <button className="btn btn-success" >
-                            Register
-                        </button>
-                    </form>
-                </div>
-
-
                 {
                     displayedUser &&
                     <Fragment>

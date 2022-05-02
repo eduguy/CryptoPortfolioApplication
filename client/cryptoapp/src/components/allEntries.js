@@ -141,10 +141,8 @@ const AllEntries = () => {
                                     <td><button onClick={() => getPrices()} className="btn btn-warning">
                                         {prices[entry.coin_name]}
                                     </button></td>
-                                    {/* TODO: maybe add some color? */}
-                                    <td> {Math.round(((prices[entry.coin_name] - entry.buy_price) / entry.buy_price) * 100 * 1000) / 1000}% </td>
+                                    <td style={prices[entry.coin_name] - entry.buy_price > 0? {color: "green"} : {color: "red"}}> {Math.round(((prices[entry.coin_name] - entry.buy_price) / entry.buy_price) * 100 * 1000) / 1000}% </td>
                                 </tr>
-
                             ))}
 
 

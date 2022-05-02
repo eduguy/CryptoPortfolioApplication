@@ -90,6 +90,7 @@ app.get("/api/prices", async (req, ret) => {
 
     const axios = require('axios')
 
+    // TODO: Use the error codes returned by API so I can provide feedback to user when stuff doesn't change
     try {
         if (process.env.NODE_ENV === 'production') {
             axios
