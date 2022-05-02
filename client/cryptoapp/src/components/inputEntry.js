@@ -11,17 +11,21 @@ const InputEntry = () => {
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
-            // TODO: do some basic client side validation of inputs
-
+            if (buy_price <= 0 || quantity <= 0 || isNaN(buy_price) || isNaN(quantity) ) {
+                throw "There is an issue with your buy price or quantity inputs";
+            }
             const reqBody = { buy_price, coin_name, quantity, user };
-            await fetch(baseURL + "entries", {
+            let req = await fetch(baseURL + "entries", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(reqBody)
             });
+            if (req.status == 400) {
+                throw 'There was an error, possibly on the server';
+            }
             window.location = "/";
         } catch (err) {
-            console.log(err);
+            alert (err);
         }
     }
     useEffect(() => {
