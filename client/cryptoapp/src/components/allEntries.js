@@ -92,20 +92,39 @@ const AllEntries = () => {
             let data = await response.json();
             let k = data.data;
             const decimalPlaces = 100000;
-            if (process.env.NODE_ENV === 'production') {
-                setPrices({
-                    "Bitcoin": Math.round(k['1'].quote.USD.price * decimalPlaces) / decimalPlaces,
-                    "Ethereum": Math.round(k['1027'].quote.USD.price * decimalPlaces) / decimalPlaces
-                });
+            if (response.status === 200) {
+                if (process.env.NODE_ENV === 'production') {
+                    setPrices({
+                        "Bitcoin": Math.round(k['1'].quote.USD.price * decimalPlaces) / decimalPlaces,
+                        "Ethereum": Math.round(k['1027'].quote.USD.price * decimalPlaces) / decimalPlaces
+                    });
+                } else {
+                    setPrices({
+                        "Bitcoin": Math.round(k.bitcoin.quote.USD.price * decimalPlaces) / decimalPlaces,
+                        "Ethereum": Math.round(k.ethereum.quote.USD.price * decimalPlaces) / decimalPlaces
+                    });
+                }
+
+                let table = document.getElementsByClassName("table");
+                if (table) {
+                    if (table[0]) {
+                        let buttons = table[0].querySelectorAll("button.btn.btn-warning.price")
+
+                        for (let button of buttons) {
+                            button.style.color = "green";
+                            setTimeout(() => {
+                                button.style.color = 'black';
+                            }, 750);
+                        }
+                    }
+
+                }
             } else {
-                setPrices({
-                    "Bitcoin": Math.round(k.bitcoin.quote.USD.price * decimalPlaces) / decimalPlaces,
-                    "Ethereum": Math.round(k.ethereum.quote.USD.price * decimalPlaces) / decimalPlaces
-                });
+                throw "Error retrieving prices, try again later.";
             }
 
-        } catch (err0) {
-
+        } catch (err) {
+            alert(err);
         }
     }
     return (
@@ -138,10 +157,10 @@ const AllEntries = () => {
                                     <td> {entry.quantity}</td>
                                     <td> <EditEntry entry={entry} /> </td>
                                     <td><button onClick={() => remove(entry.entry_id)} className="btn btn-danger"> Delete </button></td>
-                                    <td><button onClick={() => getPrices()} className="btn btn-warning">
+                                    <td><button onClick={(e) => getPrices(e)} className="btn btn-warning price">
                                         {prices[entry.coin_name]}
                                     </button></td>
-                                    <td style={prices[entry.coin_name] - entry.buy_price > 0? {color: "green"} : {color: "red"}}> {Math.round(((prices[entry.coin_name] - entry.buy_price) / entry.buy_price) * 100 * 1000) / 1000}% </td>
+                                    <td style={prices[entry.coin_name] - entry.buy_price > 0 ? { color: "green" } : { color: "red" }}> {Math.round(((prices[entry.coin_name] - entry.buy_price) / entry.buy_price) * 100 * 1000) / 1000}% </td>
                                 </tr>
                             ))}
 
