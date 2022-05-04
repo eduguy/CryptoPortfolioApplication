@@ -8,12 +8,14 @@ const Login = ({ children }) => {
     const [registerBox, setRegisterBox] = useState("");
     const [displayedUser, setDisplayedUser] = useState("");
     const loginUser = async (e) => {
-        if (displayedUser) {
-            alert("Sign out of the current user first");
-            return;
-        }
-        e.preventDefault();
         try {
+            if (displayedUser) {
+                throw "Sign out of the current user first";
+            }
+            if (!userBox) {
+                throw "Username is empty";
+            }
+            e.preventDefault();
             const req = await fetch(baseURL + "users");
             const data = await req.json();
 
@@ -24,20 +26,20 @@ const Login = ({ children }) => {
             }
 
         } catch (err) {
-            console.error(err);
-            alert("There was an error.")
+            alert(err);
 
         }
 
     }
     const registerUser = async (e) => {
-        if (displayedUser) {
-            alert("Sign out of the current user first");
-            return;
-
-        }
-        e.preventDefault();
         try {
+            if (displayedUser) {
+                throw "Sign out of the current user first";
+            }
+            if (!registerBox) {
+                throw "Username is empty";
+            }
+            e.preventDefault();
             const body = { user: registerBox };
             const req = await fetch(baseURL + "users", {
                 method: "POST",
@@ -53,8 +55,7 @@ const Login = ({ children }) => {
             setDisplayedUser(registerBox);
 
         } catch (err) {
-            console.error(err);
-            alert("There was an error.")
+            alert(err);
         }
     }
 

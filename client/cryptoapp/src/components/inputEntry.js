@@ -21,7 +21,7 @@ const InputEntry = () => {
                 body: JSON.stringify(reqBody)
             });
             if (req.status == 400) {
-                throw 'There was an error, possibly on the server';
+                throw "There was an error, possibly on the server";
             }
             window.location = "/";
         } catch (err) {

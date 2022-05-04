@@ -93,21 +93,20 @@ app.get("/api/prices", async (req, ret) => {
     // TODO: Use the error codes returned by API so I can provide feedback to user when stuff doesn't change
     try {
         if (process.env.NODE_ENV === 'production') {
-            axios
-                .get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
+            axios.get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
                     headers: {
                         'X-CMC_PRO_API_KEY': process.env.COINAPI
                     }
                 })
                 .then(res => {
                     ret.json(res.data);
+                    ret.status(200);
                 })
                 .catch(error => {
                     console.error(error)
                 })
         } else {
-            axios
-                .get('https://sandbox-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
+            axios.get('https://sandbox-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
                     headers: {
                         'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c'
                     }
