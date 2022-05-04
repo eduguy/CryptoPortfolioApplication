@@ -90,7 +90,6 @@ app.get("/api/prices", async (req, ret) => {
 
     const axios = require('axios')
 
-    // TODO: Use the error codes returned by API so I can provide feedback to user when stuff doesn't change
     try {
         if (process.env.NODE_ENV === 'production') {
             axios.get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?slug=bitcoin,ethereum', {
@@ -100,9 +99,9 @@ app.get("/api/prices", async (req, ret) => {
                 })
                 .then(res => {
                     ret.json(res.data);
-                    ret.status(200);
                 })
                 .catch(error => {
+                    ret.status(400);
                     console.error(error)
                 })
         } else {
@@ -115,6 +114,7 @@ app.get("/api/prices", async (req, ret) => {
                     ret.json(res.data);
                 })
                 .catch(error => {
+                    ret.status(400);
                     console.error(error)
                 })
         }

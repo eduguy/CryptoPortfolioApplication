@@ -107,14 +107,17 @@ const AllEntries = () => {
 
                 let table = document.getElementsByClassName("table");
                 if (table) {
-                    let buttons = table[0].querySelectorAll("button.btn.btn-warning.price")
+                    if (table[0]) {
+                        let buttons = table[0].querySelectorAll("button.btn.btn-warning.price")
 
-                    for (let button of buttons) {
-                        button.style.color = "green";
-                        setTimeout(() => {
-                            button.style.color = 'black';
-                        }, 750);
+                        for (let button of buttons) {
+                            button.style.color = "green";
+                            setTimeout(() => {
+                                button.style.color = 'black';
+                            }, 750);
+                        }
                     }
+
                 }
             } else {
                 throw "Error retrieving prices, try again later.";
