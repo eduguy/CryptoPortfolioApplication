@@ -16,7 +16,7 @@ const AllEntries = () => {
     const [user, setUser] = useContext(Context);
     const getEntries = async () => {
         try {
-
+            if (!user) return;
             const response = await fetch(baseURL + "entries/" + user);
             const data = await response.json();
             // console.log(data);
