@@ -333,6 +333,38 @@
   dependencies:
     "once" "^1.4.0"
 
+"esbuild-windows-64@0.14.53":
+  "integrity" "sha512-s9skQFF0I7zqnQ2K8S1xdLSfZFsPLuOGmSx57h2btSEswv0N0YodYvqLcJMrNMXh6EynOmWD7rz+0rWWbFpIHQ=="
+  "resolved" "https://registry.npmjs.org/esbuild-windows-64/-/esbuild-windows-64-0.14.53.tgz"
+  "version" "0.14.53"
+
+"esbuild@^0.14.53":
+  "integrity" "sha512-ohO33pUBQ64q6mmheX1mZ8mIXj8ivQY/L4oVuAshr+aJI+zLl+amrp3EodrUNDNYVrKJXGPfIHFGhO8slGRjuw=="
+  "resolved" "https://registry.npmjs.org/esbuild/-/esbuild-0.14.53.tgz"
+  "version" "0.14.53"
+  optionalDependencies:
+    "@esbuild/linux-loong64" "0.14.53"
+    "esbuild-android-64" "0.14.53"
+    "esbuild-android-arm64" "0.14.53"
+    "esbuild-darwin-64" "0.14.53"
+    "esbuild-darwin-arm64" "0.14.53"
+    "esbuild-freebsd-64" "0.14.53"
+    "esbuild-freebsd-arm64" "0.14.53"
+    "esbuild-linux-32" "0.14.53"
+    "esbuild-linux-64" "0.14.53"
+    "esbuild-linux-arm" "0.14.53"
+    "esbuild-linux-arm64" "0.14.53"
+    "esbuild-linux-mips64le" "0.14.53"
+    "esbuild-linux-ppc64le" "0.14.53"
+    "esbuild-linux-riscv64" "0.14.53"
+    "esbuild-linux-s390x" "0.14.53"
+    "esbuild-netbsd-64" "0.14.53"
+    "esbuild-openbsd-64" "0.14.53"
+    "esbuild-sunos-64" "0.14.53"
+    "esbuild-windows-32" "0.14.53"
+    "esbuild-windows-64" "0.14.53"
+    "esbuild-windows-arm64" "0.14.53"
+
 "escape-goat@^2.0.0":
   "integrity" "sha512-8/uIhbG12Csjy2JEW7D9pHbreaVaS/OpN3ycnyvElTdwM5n6GY6W6e2IPemfvGZeUMqZ9A/3GqIZMgKnBhAw/Q=="
   "resolved" "https://registry.npmjs.org/escape-goat/-/escape-goat-2.1.1.tgz"
