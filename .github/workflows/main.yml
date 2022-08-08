@@ -38,4 +38,13 @@ jobs:
       - run: echo -e "Host ubuntu\n\tUser ubuntu\n\tHostname 54.193.122.205\n\tIdentityFile ~/.ssh/github-action\n\tStrictHostKeyChecking No" >> ~/.ssh/config
       # - run: rsync -e ssh server/built/server.js ubuntu:~/api/server.js
       # - run: ssh ubuntu "echo some text"
-      - run: rsync -avz server/built/ ubuntu@54.193.122.205:/home/ubuntu/
+      # - run: rsync -avz server/built/ ubuntu@54.193.122.205:/home/ubuntu/
+      - name: copy file via ssh key
+        uses: appleboy/scp-action@master
+        with:
+          host: 54.193.122.205
+          username: ubuntu
+          port: 22
+          key: ${{ secrets.SSH_KEY }}
+          source: "server/built/server.js"
+          target: "test"
