@@ -1,5 +1,3 @@
 .env
 /node_modules
-yarn.lock
-package.json
-package-lock.json
+built

@@ -1,4 +1,13 @@
 {
+  "scripts": {
+    "install": "npm run install:server && npm run install:client",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client/cryptoapp && npm install",
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "cd server && npm run build",
+    "build:client": "cd client/cryptoapp && npm run build"
+
+  },
   "dependencies": {
     "axios": "^0.26.1"
   }
