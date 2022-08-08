@@ -9,6 +9,7 @@ const Login = ({ children }) => {
     const [displayedUser, setDisplayedUser] = useState("");
     const loginUser = async (e) => {
         try {
+            console.log("test print statement")
             if (displayedUser) {
                 throw "Sign out of the current user first";
             }
