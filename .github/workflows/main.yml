@@ -1,19 +1,15 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "actions" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "actions" ]
+    branches: [ "master" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-
 
 jobs:
   build-and-deploy:
@@ -57,4 +53,4 @@ jobs:
           command: sudo systemctl reload nginx
           host: 54.193.122.205
           username: ubuntu
-          privateKey: ${{ secrets.SSH_KEY}}
+          privateKey: ${{ secrets.SSH_KEY }}
